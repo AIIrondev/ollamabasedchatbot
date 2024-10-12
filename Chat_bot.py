@@ -19,24 +19,24 @@ class app:
         self.app.mainloop()
     
     def main_programm(self):
-        self.chat_box = ctk.CTkText(self.app, height=20, width=50)
+        self.chat_box = ctk.CTkTextbox(self.app, height=250, width=500)
         self.chat_box.pack(pady=20)
         self.chat_box.tag_config("bot", foreground="red")
         self.chat_box.tag_config("user", foreground="blue")
-        self.chat_box.config(state="disabled")
+        self.chat_box.configure(state="disabled")
 
-        self.message_box = ctk.CTkEntry(self.app, width=50)
+        self.message_box = ctk.CTkEntry(self.app, width=500)
         self.message_box.pack(pady=20)
         self.message_box.bind("<Return>", self.send_message)
 
     def send_message(self, event):
         message = self.message_box.get()
         self.message_box.delete(0, "end")
-        self.chat_box.config(state="normal")
+        self.chat_box.configure(state="normal")
         self.chat_box.insert("end", "You: " + message + "\n", "user")
         response = self.get_response(message)
-        self.chat_box.insert("end", "Bot: " + response.choices[0].text + "\n", "bot")
-        self.chat_box.config(state="disabled")
+        self.chat_box.insert("end", "Bot: " + str(response) + "\n", "bot")
+        self.chat_box.configure(state="disabled")
         self.chat_box.see("end")
         
     def get_response(self, question):
