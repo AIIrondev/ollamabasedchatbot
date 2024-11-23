@@ -1,5 +1,8 @@
 from llama_index.llms.ollama import Ollama
 import customtkinter as ctk
+import os
+from gtts import gTTS
+import playsound
 
 
 class app:
@@ -36,7 +39,19 @@ class app:
         
     def get_response(self, question):
         response = self.llm.complete(question)
+        read_message().play_text(response)
         return response
+
+
+class read_message():
+    def play_text(self, message):
+        self.message = message
+        self.tts = gTTS(text=self.message, lang="en")
+        self.tts.save("message.mp3")
+        playsound.playsound("message.mp3")
+        self.tts.close()
+        os.remove("message.mp3")
+
 
 if __name__ == "__main__":
     app = app()
